@@ -14,11 +14,11 @@ function App() {
   const { user } = useSelector((state) => state.auths);
 
   return (
-    <BrowserRouter basename="/willcommerce">
-      <TopBar />
-      <Navbar />
+    <BrowserRouter basename="/">
       <Routes>
-        <Route path="/willcommerce" element={<Home />} />
+        <TopBar />
+        <Navbar />
+        <Route path="/" element={<Home />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
