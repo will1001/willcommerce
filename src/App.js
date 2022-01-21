@@ -1,5 +1,5 @@
 import Home from "./pages/Home";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProductList from "./pages/ProductList";
 import Navbar from "./components/Navbar";
 import TopBar from "./components/TopBar";
@@ -14,10 +14,10 @@ function App() {
   const { user } = useSelector((state) => state.auths);
 
   return (
-    <BrowserRouter basename="/">
+    <HashRouter basename="/">
+      <TopBar />
+      <Navbar />
       <Routes>
-        <TopBar />
-        <Navbar />
         <Route path="/" element={<Home />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
@@ -29,7 +29,7 @@ function App() {
         <Route path="/cart" element={user ? <Cart /> : <Navigate to="/" />} />
       </Routes>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

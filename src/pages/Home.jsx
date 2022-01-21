@@ -69,23 +69,25 @@ const Home = () => {
   const products = useSelector((state) => state.products.products);
 
   const shuffle = (array) => {
-    let currentIndex = array.length,
-      randomIndex;
+  let currentIndex = array.length,
+    randomIndex;
 
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
 
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-    return array;
-  };
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+  return array;
+};
   useEffect(() => {
     getProducts(dispatch);
   }, [dispatch]);
+
+  
 
   return (
     <div>
@@ -116,7 +118,7 @@ const Home = () => {
         <ListTitle>Best Seller</ListTitle>
         <Divider />
         <ProductContainer>
-          {shuffle(products.slice(0, 4)).map((e, i) => {
+          {products.map((e, i) => {
             return <ProductCard key={i} item={e} />;
           })}
         </ProductContainer>
