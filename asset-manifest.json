@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/willcommerce/static/css/main.a9d175cf.css",
-    "main.js": "/willcommerce/static/js/main.a16a76ec.js",
+    "main.js": "/willcommerce/static/js/main.08f1107a.js",
     "static/js/787.f1f2dbea.chunk.js": "/willcommerce/static/js/787.f1f2dbea.chunk.js",
     "index.html": "/willcommerce/index.html",
     "main.a9d175cf.css.map": "/willcommerce/static/css/main.a9d175cf.css.map",
-    "main.a16a76ec.js.map": "/willcommerce/static/js/main.a16a76ec.js.map",
+    "main.08f1107a.js.map": "/willcommerce/static/js/main.08f1107a.js.map",
     "787.f1f2dbea.chunk.js.map": "/willcommerce/static/js/787.f1f2dbea.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a9d175cf.css",
-    "static/js/main.a16a76ec.js"
+    "static/js/main.08f1107a.js"
   ]
 }
