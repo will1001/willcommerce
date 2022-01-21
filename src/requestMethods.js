@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:5000/api/";
+const BASE_URL = "https://willcommerceapi.herokuapp.com/api/";
 console.log(localStorage.getItem("state.user"));
 let TOKEN = "";
 if (localStorage.getItem("state.user")) {
