@@ -1,36 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import ProductCard from "../components/ProductCard";
-const a = [
-  {
-    id: "2",
-    name: "adad",
-    price: 200,
-    rating: 100,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-  {
-    id: "3",
-    name: "adad2",
-    price: 50,
-    rating: 80,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-  {
-    id: "1",
-    name: "adad3",
-    price: 70,
-    rating: 60,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-  {
-    id: "4",
-    name: "adad",
-    price: 200,
-    rating: 100,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-];
+import { useNavigate } from "react-router-dom";
+import { getProducts } from "../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -39,13 +12,14 @@ const Container = styled.div`
 const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px;
+  padding: 30px;
 `;
 
 const FilterContainer = styled.div`
-  width: 500px;
+  width: 300px;
   padding: 20px;
+  box-shadow: 2px 0px 5px #e0d0d0;
+  background-color: #f5eedc;
 `;
 
 const Select = styled.select`
@@ -54,8 +28,12 @@ const Select = styled.select`
 `;
 
 const ProductList = () => {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    getProducts(dispatch);
   }, []);
   return (
     <Container>
@@ -80,7 +58,7 @@ const ProductList = () => {
         </Select>
       </FilterContainer>
       <ProductContainer>
-        {a.map((e, i) => {
+        {products.map((e, i) => {
           return <ProductCard key={i} item={e} />;
         })}
       </ProductContainer>

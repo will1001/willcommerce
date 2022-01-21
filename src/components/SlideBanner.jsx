@@ -78,7 +78,7 @@ const SlideBanner = () => {
       slidesPerView={1}
       loop={true}
       autoplay={{
-        delay: 2000,
+        delay: 4000,
       }}
     >
       {slideImg.map((item, i) => {

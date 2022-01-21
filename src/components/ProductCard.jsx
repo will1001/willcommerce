@@ -61,11 +61,10 @@ const CartButton = styled.div`
 
 const ProductCard = ({ item }) => {
   const navigate = useNavigate();
-  // const []
   return (
-    <Container onClick={() => navigate(`/product/${item.id}`, { state: item })}>
+    <Container onClick={() => navigate(`/product/${item._id}`, { state: item })}>
       <Img src={item.img} alt="product" />
-      <ProductName>{item.name}</ProductName>
+      <ProductName>{item.title}</ProductName>
       <Rating readonly={true} ratingValue={item.rating} size={15} />
       <Price>${item.price}</Price>
       <ButtonContainer>

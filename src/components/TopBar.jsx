@@ -3,6 +3,9 @@ import styled from "styled-components";
 import LanguageIcon from "@mui/icons-material/Language";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -36,6 +39,9 @@ const Right = styled.div`
 `;
 
 const TopBar = () => {
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auths);
+
   return (
     <Container>
       <Left>
@@ -56,14 +62,16 @@ const TopBar = () => {
           </select>
         </Child>
       </Left>
-      <Right>
-        <Child>
-          <span>LOGIN</span>
-        </Child>
-        <Child>
-          <span>REGISTER</span>
-        </Child>
-      </Right>
+      {!user && (
+        <Right>
+          <Child onClick={() => navigate("/login")}>
+            <span>LOGIN</span>
+          </Child>
+          <Child onClick={() => navigate("/register")}>
+            <span>REGISTER</span>
+          </Child>
+        </Right>
+      )}
     </Container>
   );
 };

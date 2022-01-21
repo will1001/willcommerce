@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Badge from "@mui/material/Badge";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { authLogout } from "../redux/apiCalls";
 
+import { useDispatch } from "react-redux";
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -59,10 +64,50 @@ const SearchButton = styled.div`
 const CartContainer = styled.div`
   display: flex;
   justify-content: center;
+  cursor: pointer;
+  > :first-child {
+    margin-right: 20px;
+  }
+`;
+
+const ProfileMenu = styled.div`
+  position: absolute;
+  right: 70px;
+  top: 100px;
+  background-color: white;
+  box-shadow: -1px 0px 10px #b4afaf;
+  text-align: center;
+  z-index: 999;
+`;
+
+const ProfileButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #b4afaf;
+  color: #7c7575;
+  padding: 20px 20px;
+  width: 80px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f36c4f;
+    color: white;
+  }
 `;
 
 const Navbar = () => {
+  const { user } = useSelector((state) => state.auths);
   const navigate = useNavigate();
+  const [openProfilMenu, setOpenProfilMenu] = useState(false);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    authLogout(dispatch);
+    setOpenProfilMenu(!openProfilMenu);
+  };
+
+  console.log(user);
+
   return (
     <Container>
       <Logo onClick={() => navigate("/")}>
@@ -76,10 +121,26 @@ const Navbar = () => {
         </SearchButton>
       </SearchContainer>
       <CartContainer>
+        {user && (
+          <PersonOutlineOutlinedIcon
+            onClick={() => setOpenProfilMenu(!openProfilMenu)}
+            sx={{ fontSize: 30 }}
+          />
+        )}
         <Badge badgeContent={4} color="primary">
-          <ShoppingCartOutlinedIcon sx={{ fontSize: 30 }} />
+          <ShoppingCartOutlinedIcon
+            onClick={() => navigate("/cart")}
+            sx={{ fontSize: 30 }}
+          />
         </Badge>
       </CartContainer>
+      {openProfilMenu && (
+        <ProfileMenu>
+          <ProfileButton onClick={logout}>
+            <LogoutIcon style={{ fontSize: 20 }} /> Logout
+          </ProfileButton>
+        </ProfileMenu>
+      )}
     </Container>
   );
 };

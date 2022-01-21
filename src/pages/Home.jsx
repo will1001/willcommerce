@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import SlideBanner from "../components/SlideBanner";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { getProducts } from "../redux/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
 
 const ListContainer = styled.div`
   box-shadow: 0px 0px 10px #888888;
@@ -23,7 +25,6 @@ const Divider = styled.div`
 const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   padding: 20px;
 `;
 
@@ -62,39 +63,29 @@ const SubTitle = styled.div`
   font-weight: 400;
 `;
 
-const a = [
-  {
-    id: "2",
-    name: "adad",
-    price: 200,
-    rating: 100,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-  {
-    id: "3",
-    name: "adad2",
-    price: 50,
-    rating: 80,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-  {
-    id: "1",
-    name: "adad3",
-    price: 70,
-    rating: 60,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-  {
-    id: "4",
-    name: "adad",
-    price: 200,
-    rating: 100,
-    img: "https://img.huffingtonpost.com/asset/599c4f431f00002a001aa577.jpeg?ops=scalefit_960_noupscale",
-  },
-];
-
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
+
+  const shuffle = (array) => {
+    let currentIndex = array.length,
+      randomIndex;
+
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  };
+  useEffect(() => {
+    getProducts(dispatch);
+  }, [dispatch]);
 
   return (
     <div>
@@ -125,7 +116,7 @@ const Home = () => {
         <ListTitle>Best Seller</ListTitle>
         <Divider />
         <ProductContainer>
-          {a.map((e, i) => {
+          {shuffle(products.slice(0, 4)).map((e, i) => {
             return <ProductCard key={i} item={e} />;
           })}
         </ProductContainer>
@@ -134,7 +125,7 @@ const Home = () => {
         <ListTitle>Special</ListTitle>
         <Divider />
         <ProductContainer>
-          {a.map((e, i) => {
+          {shuffle(products.slice(0, 4)).map((e, i) => {
             return <ProductCard key={i} item={e} />;
           })}
         </ProductContainer>
