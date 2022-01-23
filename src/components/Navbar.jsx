@@ -106,7 +106,6 @@ const Navbar = () => {
     setOpenProfilMenu(!openProfilMenu);
   };
 
-  console.log(user);
 
   return (
     <Container>

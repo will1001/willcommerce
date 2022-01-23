@@ -1,6 +1,5 @@
 import { publicRequest, userRequest } from "../requestMethods";
 
-
 import {
   getProductFailure,
   getProductStart,
@@ -28,6 +27,44 @@ export const getProducts = async (dispatch) => {
   }
 };
 
+export const searchProducts = async (dispatch, color, size) => {
+  let paramFilter;
+  if (color !== "" && size !== "") {
+    paramFilter = `${"/filter?color=" + color}${"&size=" + size}`;
+  } else if (color !== "" && size === "") {
+    paramFilter = `${"/filter?color=" + color}`;
+  } else if (color === "" && size !== "") {
+    paramFilter = `${"/filter?size=" + size}`;
+  } else {
+    paramFilter = "";
+  }
+
+  dispatch(getProductStart());
+  try {
+    const res = await publicRequest.get(`/products/${paramFilter}`);
+    dispatch(getProductSuccess(res.data));
+  } catch (err) {
+    dispatch(getProductFailure());
+  }
+};
+
+export const sortProducts = async (dispatch, sort) => {
+  let paramSort;
+  if (sort === "price(asc)") {
+    paramSort = `${"/?price=" + 1}`;
+  } else if (sort === "price(desc)") {
+    paramSort = `${"/?price=" + -1}`;
+  } else {
+    paramSort = `${"/?rating=" + -1}`;
+  }
+  dispatch(getProductStart());
+  try {
+    const res = await publicRequest.get(`/products/sort${paramSort}`);
+    dispatch(getProductSuccess(res.data));
+  } catch (err) {
+    dispatch(getProductFailure());
+  }
+};
 
 export const register = async (user, dispatch) => {
   dispatch(registerStart());
@@ -35,8 +72,6 @@ export const register = async (user, dispatch) => {
     const res = await publicRequest.post("auth/register", user);
     dispatch(registerSuccess(res.data));
   } catch (err) {
-    console.log("err.response");
-    console.log(err.response);
     dispatch(registerFailure());
   }
 };
